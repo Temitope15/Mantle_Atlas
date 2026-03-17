@@ -1,0 +1,1 @@
+"""Mantle Atlas API package."""
