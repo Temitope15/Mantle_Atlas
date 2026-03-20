@@ -1,4 +1,5 @@
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import RedirectResponse
 
 from backend.api.routes import api_router
@@ -9,6 +10,14 @@ app = FastAPI(
     title="Mantle Atlas",
     version="1.0.0",
     description="Backend data infrastructure and intelligence engine for Mantle Atlas.",
+)
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=False,
+    allow_methods=["*"],
+    allow_headers=["*"],
 )
 
 app.include_router(api_router, prefix="/api", tags=["api"])

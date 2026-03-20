@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import Head from "next/head";
 import Link from "next/link";
 
 import { getInsights } from "../services/api";
@@ -28,98 +29,80 @@ export default function InsightsPage() {
   }, []);
 
   return (
-    <main className="min-h-screen bg-slate-950 text-white">
-      <div className="mx-auto max-w-6xl px-6 py-10">
-        <header className="mb-10 flex flex-col gap-4 border-b border-slate-800 pb-6 md:flex-row md:items-end md:justify-between">
-          <div>
-            <p className="text-sm font-medium uppercase tracking-[0.3em] text-cyan-400">
-              Mantle Atlas
-            </p>
-            <h1 className="mt-2 text-4xl font-bold tracking-tight">
-              Ecosystem Insights
+    <>
+      <Head>
+        <title>Mantle Atlas | AI Insights</title>
+      </Head>
+      <div className="mx-auto max-w-5xl px-6 py-12 relative overflow-hidden min-h-screen">
+        {/* Decorative Orbs */}
+        <div className="absolute top-[20%] left-[50%] -translate-x-1/2 w-[800px] h-[800px] bg-mantle-600/10 rounded-full blur-[180px] animate-pulse-slow pointer-events-none" />
+
+        <header className="mb-14 flex flex-col gap-6 md:flex-row md:items-end md:justify-between relative z-10 animate-slide-up">
+          <div className="max-w-2xl">
+            <Link href="/" className="inline-flex items-center gap-2 mb-6 text-slate-400 hover:text-white transition-colors text-sm font-semibold">
+              &larr; Back to Dashboard
+            </Link>
+            <h1 className="text-4xl font-extrabold tracking-tight md:text-6xl mb-4 text-white">
+              AI <span className="text-transparent bg-clip-text bg-gradient-to-r from-mantle-400 to-emerald-400">Insights</span>
             </h1>
-            <p className="mt-3 max-w-2xl text-sm text-slate-300 md:text-base">
-              Readable intelligence generated from live Mantle ecosystem yield,
-              liquidity, and opportunity signals.
+            <p className="text-lg text-slate-400 font-light leading-relaxed">
+              Synthesized intelligence generated directly from real-time Mantle
+              ecosystem yield, liquidity, and momentum.
             </p>
           </div>
-
-          <nav className="flex flex-wrap gap-3 text-sm">
-            <Link
-              href="/"
-              className="rounded-lg border border-slate-700 px-4 py-2 text-slate-200 transition hover:border-cyan-400 hover:text-cyan-300"
-            >
-              Home
-            </Link>
-            <Link
-              href="/ecosystem"
-              className="rounded-lg border border-slate-700 px-4 py-2 text-slate-200 transition hover:border-cyan-400 hover:text-cyan-300"
-            >
-              Ecosystem
-            </Link>
-            <Link
-              href="/opportunities"
-              className="rounded-lg border border-slate-700 px-4 py-2 text-slate-200 transition hover:border-cyan-400 hover:text-cyan-300"
-            >
-              Opportunities
-            </Link>
-            <Link
-              href="/insights"
-              className="rounded-lg border border-cyan-500 bg-cyan-500/10 px-4 py-2 text-cyan-300"
-            >
-              Insights
-            </Link>
-          </nav>
         </header>
 
         {loading ? (
-          <section className="grid gap-4">
+          <section className="grid gap-6 relative z-10 animate-slide-up animate-stagger-1">
             {[0, 1, 2].map((item) => (
               <div
                 key={item}
-                className="animate-pulse rounded-2xl border border-slate-800 bg-slate-900 p-6"
+                className="glass-card rounded-3xl p-8 border-glass-border/50 animate-pulse"
               >
-                <div className="h-4 w-32 rounded bg-slate-800" />
-                <div className="mt-4 h-4 w-full rounded bg-slate-800" />
-                <div className="mt-2 h-4 w-5/6 rounded bg-slate-800" />
+                <div className="h-4 w-32 rounded bg-white/10 mb-6" />
+                <div className="h-5 w-full rounded bg-white/5 mb-3" />
+                <div className="h-5 w-5/6 rounded bg-white/5" />
               </div>
             ))}
           </section>
         ) : error ? (
-          <section className="rounded-2xl border border-red-500/30 bg-red-500/10 p-6 text-red-200">
+          <section className="glass-panel rounded-3xl border-red-500/30 bg-red-950/20 p-8 text-red-200 relative z-10 text-center font-semibold text-lg animate-slide-up">
             {error}
           </section>
         ) : insights.length === 0 ? (
-          <section className="rounded-2xl border border-slate-800 bg-slate-900 p-6 text-slate-300">
-            No insights are available right now.
+          <section className="glass-panel rounded-3xl p-12 text-slate-400 relative z-10 text-center animate-slide-up">
+            No actionable insights detected at this moment.
           </section>
         ) : (
-          <section className="grid gap-5">
+          <section className="grid gap-6 relative z-10">
             {insights.map((insight, index) => (
               <article
                 key={`${index}-${insight}`}
-                className="rounded-2xl border border-slate-800 bg-gradient-to-br from-slate-900 to-slate-950 p-6 shadow-lg shadow-black/20"
+                className="glass-card rounded-3xl p-8 hover:premium-glow group animate-slide-up"
+                style={{ animationDelay: `${(index + 1) * 100}ms` }}
               >
-                <div className="mb-4 flex items-center gap-3">
-                  <div className="flex h-10 w-10 items-center justify-center rounded-full bg-cyan-500/15 text-sm font-semibold text-cyan-300">
+                <div className="mb-6 flex items-center gap-4">
+                  <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br from-mantle-500 to-cyan-600 text-lg font-black text-white shadow-lg transition-transform group-hover:scale-110">
                     {index + 1}
                   </div>
                   <div>
-                    <p className="text-xs uppercase tracking-[0.25em] text-slate-400">
-                      Insight
-                    </p>
-                    <h2 className="text-lg font-semibold text-white">
-                      Mantle Ecosystem Signal
+                    <h2 className="text-xl font-bold text-white">
+                      Alpha Intelligence
                     </h2>
+                    <p className="text-sm font-semibold uppercase tracking-widest text-mantle-400">
+                      System Generated
+                    </p>
                   </div>
                 </div>
 
-                <p className="text-base leading-7 text-slate-200">{insight}</p>
+                <p className="text-xl font-light text-slate-200 leading-relaxed border-l-2 border-mantle-500/50 pl-6 ml-2">
+                  {insight}
+                </p>
               </article>
             ))}
           </section>
         )}
       </div>
-    </main>
+    </>
   );
 }

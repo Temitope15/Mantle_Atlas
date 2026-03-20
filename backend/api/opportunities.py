@@ -4,7 +4,7 @@ from backend.algorithms.opportunity_score import get_top_opportunities
 from backend.data.defillama import get_mantle_pools, get_mantle_protocols
 from backend.data.dexscreener import get_pool_volume_growth_index
 
-router = APIRouter(prefix="/api", tags=["api"])
+router = APIRouter(tags=["opportunities"])
 
 
 @router.get("/opportunities")
@@ -35,4 +35,4 @@ def get_opportunities(chain_id: str = "mantle") -> list[dict[str, object]]:
         }
         for result in results
     ]
-}
+

@@ -7,36 +7,59 @@ module.exports = {
   ],
   theme: {
     extend: {
+      fontFamily: {
+        sans: ['var(--font-outfit)', 'sans-serif'],
+      },
       colors: {
         mantle: {
-          50: "#f4f7ff",
-          100: "#e8efff",
-          200: "#cddcff",
-          300: "#a8c0ff",
-          400: "#7d99ff",
-          500: "#5b72ff",
-          600: "#4654f5",
-          700: "#3a43db",
-          800: "#3238b1",
-          900: "#2d338b",
+          50: '#f4fbf9',
+          100: '#d7f4ea',
+          200: '#aee7d4',
+          300: '#7bd3b8',
+          400: '#4fb89a',
+          500: '#2e9d7f',
+          600: '#1f7d66',
+          700: '#1a6453',
+          800: '#175043',
+          900: '#144238',
+          950: '#0b2621',
         },
-        atlas: {
-          bg: "#0b1020",
-          panel: "#121a2f",
-          border: "#24304d",
-          text: "#e6edf7",
-          muted: "#94a3b8",
-          accent: "#22c55e",
-          warning: "#f59e0b",
+        dark: {
+          900: '#070A0F',
+          800: '#0B111A',
+          700: '#111827',
+          600: '#1F2937',
         },
+        glass: {
+          DEFAULT: 'rgba(17, 24, 39, 0.45)',
+          strong: 'rgba(17, 24, 39, 0.85)',
+          border: 'rgba(255, 255, 255, 0.08)',
+        }
       },
-      boxShadow: {
-        panel: "0 10px 30px rgba(0, 0, 0, 0.25)",
+      backgroundImage: {
+        'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
+        'gradient-glass': 'linear-gradient(145deg, rgba(31,41,55,0.4) 0%, rgba(17,24,39,0.8) 100%)',
       },
-      borderRadius: {
-        xl: "1rem",
-        "2xl": "1.25rem",
+      animation: {
+        'float': 'float 6s ease-in-out infinite',
+        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+        'glow': 'glow 2s ease-in-out infinite alternate',
+        'slide-up': 'slideUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards',
       },
+      keyframes: {
+        float: {
+          '0%, 100%': { transform: 'translateY(0)' },
+          '50%': { transform: 'translateY(-10px)' },
+        },
+        glow: {
+          'from': { boxShadow: '0 0 10px -5px rgba(46, 157, 127, 0.5)' },
+          'to': { boxShadow: '0 0 20px 5px rgba(46, 157, 127, 0.4)' },
+        },
+        slideUp: {
+          '0%': { opacity: '0', transform: 'translateY(20px)' },
+          '100%': { opacity: '1', transform: 'translateY(0)' },
+        }
+      }
     },
   },
   plugins: [],

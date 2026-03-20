@@ -3,7 +3,7 @@ from fastapi import APIRouter
 from backend.algorithms.yield_finder import get_yield_ranked_pools
 from backend.data.defillama import get_mantle_pools
 
-router = APIRouter(prefix="/api", tags=["yields"])
+router = APIRouter(tags=["yields"])
 
 
 @router.get("/yields")

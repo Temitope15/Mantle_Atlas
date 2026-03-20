@@ -5,7 +5,7 @@ from backend.data.defillama import get_mantle_protocols
 router = APIRouter()
 
 
-@router.get("/api/ecosystem")
+@router.get("/ecosystem")
 def get_ecosystem() -> dict[str, object]:
     protocols = get_mantle_protocols()
 
@@ -31,4 +31,4 @@ def get_ecosystem() -> dict[str, object]:
         "protocol_count": len(protocols),
         "top_protocols": top_protocols[:10],
     }
-}
+

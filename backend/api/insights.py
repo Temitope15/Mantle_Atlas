@@ -6,7 +6,7 @@ from backend.algorithms.yield_finder import get_yield_ranked_pools
 from backend.data.defillama import get_mantle_pools, get_mantle_protocols
 from backend.data.dexscreener import get_pool_volume_growth_index
 
-router = APIRouter(prefix="/api", tags=["insights"])
+router = APIRouter(tags=["insights"])
 
 
 def _format_protocol_list(protocols: list[str], limit: int = 3) -> str:

@@ -1,154 +1,61 @@
-# Mantle Atlas
+# 🌍 Mantle Atlas
 
-Mantle Atlas is a backend-first ecosystem intelligence engine for the Mantle Network.
+**Mantle Atlas** is your ultimate data map and intelligence engine for the **Mantle Network**.  
+If you want to know where the money is, which protocols are growing fastest, where the best yields are, or where liquidity is missing—this tool is built for you!
 
-This repository contains a clean, modular Python backend focused on blockchain analytics infrastructure, data collection, and normalized data modeling. The current scope is limited to project architecture, backend structure, and data collectors.
+## 🤔 What does this project do?
+Mantle Atlas is an application that automatically collects data from across the Mantle blockchain (using APIs like DeFiLlama and DexScreener) and presents it in a super simple, easy-to-understand dashboard. 
 
-## Tech Stack
+Whether you are a **regular user** looking for high APY, an **investor** tracking Total Value Locked (TVL) growth, or a **developer** looking for gaps in liquidity to build new protocols, Mantle Atlas does the heavy lifting for you by analyzing the entire ecosystem at a glance.
 
-- Python
-- FastAPI
-- Web3.py
-- Requests
-- Pydantic
+**Key Features:**
+- **Ecosystem Overview:** See exactly how much value (TVL) is locked in Mantle and which apps are dominating.
+- **Yield Opportunities:** Find the pools with the best returns out there.
+- **Liquidity Gaps:** Discover tokens that have high trading volume but low liquidity (a perfect opportunity for developers to build new liquidity pools!).
+- **Smart Insights:** Get automated plain-English summaries of what's happening on Mantle today.
 
-## Project Structure
+---
 
-```/dev/null/tree.txt#L1-16
-mantle-atlas/
-├── backend/
-│   ├── main.py
-│   ├── config.py
-│   ├── data/
-│   │   ├── mantle_rpc.py
-│   │   ├── defillama.py
-│   │   ├── coingecko.py
-│   │   └── dexscreener.py
-│   ├── models/
-│   │   ├── protocol.py
-│   │   ├── pool.py
-│   │   └── token.py
-│   └── utils/
-│       └── http_client.py
-├── requirements.txt
-└── README.md
+## 🛠️ How to run it locally
+
+The project is split into two parts: the **Backend** (which collects and crunches the data) and the **Frontend** (which displays the shiny dashboard to users).
+
+### 1. Start the Backend (Python)
+The backend is a fast API that gathers all the on-chain data.
+
+```bash
+cd backend
+
+# Create a virtual environment to keep things clean
+python -m venv venv
+source venv/bin/activate  # On Windows use: venv\Scripts\activate
+
+# Install the required packages
+pip install -r ../requirements.txt
+
+# Run the server!
+./run.sh
+# (Or run manually: uvicorn main:app --reload --port 8000)
 ```
+*The backend will be running at `http://127.0.0.1:8000`*
 
-## Scope
+### 2. Start the Frontend (Next.js)
+The frontend is the interactive website you see in your browser.
 
-This implementation focuses on:
+```bash
+cd frontend
 
-- backend architecture
-- modular data source clients
-- normalized Pydantic models
-- Mantle ecosystem data collection foundations
+# Install the necessary packages
+npm install  # (or `bun install` / `yarn install`)
 
-This implementation does not yet include:
-
-- analytics algorithms
-- scoring logic
-- ranking systems
-- frontend code
-- advanced persistence layers
-
-## Data Sources
-
-All integrations use free public APIs.
-
-### Mantle RPC
-- Endpoint: `https://mantle-rpc.publicnode.com`
-- Library: `Web3.py`
-- Purpose: connect to Mantle and expose basic chain access through a dedicated client
-
-### DeFiLlama Protocols
-- Endpoint: `https://api.llama.fi/protocols`
-- Purpose: fetch all protocols and filter those deployed on Mantle
-
-### DeFiLlama Yields
-- Endpoint: `https://yields.llama.fi/pools`
-- Purpose: fetch all pools and filter pools where `chain == "Mantle"`
-
-### CoinGecko
-- Endpoint: `https://api.coingecko.com/api/v3/simple/price`
-- Docs: `https://docs.coingecko.com/reference/simple-price`
-- Purpose: fetch token prices
-
-### DexScreener
-- Docs: `https://docs.dexscreener.com/api/reference`
-- Purpose: fetch liquidity pair data through a dedicated client
-
-## Backend Design
-
-The backend is organized by responsibility.
-
-### `backend/main.py`
-Owns the FastAPI application and exposes service endpoints.
-
-### `backend/config.py`
-Centralizes configuration such as API URLs, timeouts, and RPC settings.
-
-### `backend/data/`
-Contains one client per external data source:
-- `mantle_rpc.py`
-- `defillama.py`
-- `coingecko.py`
-- `dexscreener.py`
-
-Each module exposes a simple public function:
-- `get_mantle_protocols()`
-- `get_mantle_pools()`
-- `get_token_prices()`
-- `get_liquidity_pairs()`
-
-### `backend/models/`
-Contains normalized Pydantic models:
-- `Protocol`
-- `Pool`
-- `Token`
-
-### `backend/utils/http_client.py`
-Contains shared HTTP request logic for consistent API access and cleaner client modules.
-
-## Performance Requirements
-
-The backend is designed around linear-time processing.
-
-Guidelines:
-- all operations should remain `O(n)`
-- use single-pass filtering where possible
-- use dictionary lookups for fast access
-- avoid nested loops across datasets
-
-## Installation
-
-Create a virtual environment and install dependencies.
-
-```/dev/null/install.sh#L1-3
-python -m venv .venv
-. .venv/bin/activate
-pip install -r requirements.txt
+# Run the website!
+npm run dev  # (or `bun dev` / `yarn dev`)
 ```
+*The frontend will be running at `http://localhost:3000`*
 
-## Run
+---
 
-Start the backend with Uvicorn.
+## 🔒 Security & Data
+We ensure sensitive data (`.env` files) and heavy folders (like `node_modules` or Python's `venv`) are ignored via `.gitignore`, keeping the repository lightweight and secure. This makes the project clean and safe to fork or contribute to.
 
-```/dev/null/run.sh#L1-1
-uvicorn backend.main:app --reload
-```
-
-## Notes
-
-- The codebase is intentionally modular to make future analytics layers easier to add.
-- External API clients are isolated so each source can evolve independently.
-- The initial version prioritizes clean infrastructure over advanced computation.
-
-## Next Steps
-
-Planned backend expansion can include:
-- protocol enrichment
-- pool-to-token normalization
-- scheduled data collection
-- caching
-- database persistence
-- analytics pipelines
+Built for the **Mantle Ecosystem**. 🚀

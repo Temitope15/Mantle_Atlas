@@ -47,7 +47,7 @@ function DashboardNavigation({
   activePath: string;
 }): JSX.Element {
   return (
-    <nav className="flex flex-wrap gap-3 text-sm">
+    <nav className="flex flex-wrap gap-3">
       {navigationItems.map((item) => {
         const isActive = item.href === activePath;
 
@@ -55,10 +55,10 @@ function DashboardNavigation({
           <Link
             key={item.href}
             href={item.href}
-            className={`rounded-lg border px-4 py-2 transition ${
+            className={`rounded-xl border px-5 py-2.5 text-sm font-semibold transition-all ${
               isActive
-                ? "border-teal-500 bg-teal-500/10 text-teal-300"
-                : "border-slate-700 text-slate-300 hover:border-teal-400 hover:text-white"
+                ? "border-transparent bg-gradient-to-r from-mantle-600 to-cyan-600 text-white shadow-lg shadow-mantle-500/25"
+                : "border-glass-border bg-glass-strong text-slate-300 hover:border-mantle-400/50 hover:bg-mantle-500/20 hover:text-white"
             }`}
           >
             {item.label}
@@ -124,14 +124,14 @@ export default function EcosystemPage(): JSX.Element {
     const labels = Object.keys(totalsByCategory);
     const values = labels.map((label) => totalsByCategory[label]);
     const colors = [
+      "#2e9d7f",
+      "#0891b2",
+      "#0ea5e9",
       "#14b8a6",
-      "#3b82f6",
+      "#6366f1",
       "#8b5cf6",
-      "#f59e0b",
-      "#ef4444",
-      "#22c55e",
-      "#ec4899",
-      "#06b6d4",
+      "#10b981",
+      "#3b82f6",
     ];
 
     return {
@@ -142,8 +142,9 @@ export default function EcosystemPage(): JSX.Element {
           backgroundColor: labels.map(
             (_, index) => colors[index % colors.length],
           ),
-          borderColor: "#0f172a",
+          borderColor: "#0b111a",
           borderWidth: 2,
+          hoverOffset: 4,
         },
       ],
     };
@@ -152,181 +153,174 @@ export default function EcosystemPage(): JSX.Element {
   return (
     <>
       <Head>
-        <title>Mantle Atlas | Ecosystem</title>
+        <title>Mantle Atlas | Ecosystem Radar</title>
         <meta
           name="description"
           content="Mantle Atlas ecosystem dashboard for TVL, protocol count, and top Mantle protocols."
         />
       </Head>
 
-      <main className="min-h-screen bg-slate-950 text-slate-100">
-        <div className="mx-auto max-w-7xl px-6 py-10">
-          <header className="mb-10 flex flex-col gap-4 border-b border-slate-800 pb-6 md:flex-row md:items-end md:justify-between">
-            <div>
-              <p className="text-sm font-semibold uppercase tracking-[0.24em] text-teal-400">
-                Mantle Atlas
-              </p>
-              <h1 className="mt-2 text-4xl font-bold tracking-tight">
-                Ecosystem Dashboard
-              </h1>
-              <p className="mt-3 max-w-2xl text-sm text-slate-400">
-                Monitor Mantle ecosystem TVL, protocol density, and leading
-                protocols from the Atlas intelligence backend.
-              </p>
+      <div className="mx-auto max-w-7xl px-6 py-12 relative overflow-hidden min-h-screen">
+        {/* Decorative Orbs */}
+        <div className="absolute top-[-50px] left-[30%] w-96 h-96 bg-mantle-500/10 rounded-full blur-[120px] animate-pulse-slow pointer-events-none" />
+        <div className="absolute bottom-[-100px] left-[-100px] w-[500px] h-[500px] bg-cyan-600/10 rounded-full blur-[150px] animate-pulse-slow pointer-events-none" style={{ animationDelay: '1s' }} />
+
+        <header className="mb-14 flex flex-col gap-6 md:flex-row md:items-end md:justify-between relative z-10 animate-slide-up">
+          <div className="max-w-3xl">
+            <div className="inline-flex items-center gap-2 mb-4 px-4 py-1.5 rounded-full border border-mantle-500/30 bg-mantle-500/10 backdrop-blur-md">
+              <span className="w-2 h-2 rounded-full bg-mantle-400 animate-pulse" />
+              <span className="text-xs font-bold uppercase tracking-[0.2em] text-mantle-300">Radar Active</span>
             </div>
+            <h1 className="text-4xl font-extrabold tracking-tight md:text-6xl mb-4 text-white">
+              Ecosystem <span className="text-transparent bg-clip-text bg-gradient-to-r from-mantle-400 to-cyan-400">Dashboard</span>
+            </h1>
+            <p className="text-lg text-slate-400 font-light leading-relaxed">
+              Monitor Mantle ecosystem TVL, protocol density, and leading
+              protocols from the Atlas intelligence backend.
+            </p>
+          </div>
 
-            <DashboardNavigation activePath="/ecosystem" />
-          </header>
+          <DashboardNavigation activePath="/ecosystem" />
+        </header>
 
-          {isLoading ? (
-            <section className="rounded-2xl border border-slate-800 bg-slate-900/70 p-8">
-              <p className="text-sm text-slate-400">
-                Loading ecosystem radar...
-              </p>
+        {isLoading ? (
+          <div className="glass-panel rounded-3xl p-12 text-center relative z-10 animate-slide-up animate-stagger-1">
+            <div className="inline-block w-10 h-10 border-4 border-mantle-500/30 border-t-mantle-400 rounded-full animate-spin mb-4" />
+            <p className="text-mantle-300 font-medium">Scanning Ecosystem...</p>
+          </div>
+        ) : error ? (
+          <div className="glass-panel rounded-3xl border-red-500/30 bg-red-950/20 p-8 text-red-300 relative z-10 animate-slide-up animate-stagger-1 text-center">
+            <div className="text-4xl mb-3">⚠️</div>
+            <p className="font-medium text-lg">{error}</p>
+          </div>
+        ) : data ? (
+          <div className="space-y-8 relative z-10">
+            <section className="grid gap-6 md:grid-cols-3">
+              <article className="glass-card rounded-3xl p-8 hover:premium-glow animate-slide-up animate-stagger-1">
+                <p className="text-xs font-bold uppercase tracking-[0.2em] text-slate-400">
+                  Total Mantle TVL
+                </p>
+                <h2 className="mt-4 text-4xl font-black text-white">
+                  {formatCurrency(data.total_tvl)}
+                </h2>
+              </article>
+
+              <article className="glass-card rounded-3xl p-8 hover:premium-glow animate-slide-up animate-stagger-2">
+                <p className="text-xs font-bold uppercase tracking-[0.2em] text-slate-400">
+                  Active Protocols
+                </p>
+                <h2 className="mt-4 text-4xl font-black text-white">
+                  {data.protocol_count}
+                </h2>
+              </article>
+
+              <article className="glass-card rounded-3xl p-8 hover:premium-glow animate-slide-up animate-stagger-3">
+                <p className="text-xs font-bold uppercase tracking-[0.2em] text-slate-400">
+                  Leading Protocol
+                </p>
+                <h2 className="mt-4 text-4xl font-black text-white">
+                  {data.top_protocols[0]?.name ?? "N/A"}
+                </h2>
+              </article>
             </section>
-          ) : error ? (
-            <section className="rounded-2xl border border-red-900 bg-red-950/40 p-8">
-              <p className="text-sm text-red-300">{error}</p>
-            </section>
-          ) : data ? (
-            <div className="space-y-8">
-              <section className="grid gap-4 md:grid-cols-3">
-                <article className="rounded-2xl border border-slate-800 bg-slate-900/80 p-6 shadow-lg shadow-black/20">
-                  <p className="text-xs font-medium uppercase tracking-[0.2em] text-slate-400">
-                    Total Mantle TVL
-                  </p>
-                  <h2 className="mt-4 text-3xl font-bold text-white">
-                    {formatCurrency(data.total_tvl)}
+
+            <section className="grid gap-8 lg:grid-cols-[1.2fr_0.8fr]">
+              <article className="glass-panel rounded-3xl p-8 animate-slide-up animate-stagger-3">
+                <div className="mb-8">
+                  <h2 className="text-2xl font-bold text-white mb-2">
+                    Top Protocols
                   </h2>
-                  <p className="mt-2 text-sm text-slate-400">
-                    Aggregated from Mantle-deployed DeFi protocols.
+                  <p className="text-sm text-slate-400">
+                    Ranked by total value locked in real-time.
                   </p>
-                </article>
+                </div>
 
-                <article className="rounded-2xl border border-slate-800 bg-slate-900/80 p-6 shadow-lg shadow-black/20">
-                  <p className="text-xs font-medium uppercase tracking-[0.2em] text-slate-400">
-                    Active Protocols
-                  </p>
-                  <h2 className="mt-4 text-3xl font-bold text-white">
-                    {data.protocol_count}
-                  </h2>
-                  <p className="mt-2 text-sm text-slate-400">
-                    Protocol count currently detected on Mantle.
-                  </p>
-                </article>
-
-                <article className="rounded-2xl border border-slate-800 bg-slate-900/80 p-6 shadow-lg shadow-black/20">
-                  <p className="text-xs font-medium uppercase tracking-[0.2em] text-slate-400">
-                    Leading Protocol
-                  </p>
-                  <h2 className="mt-4 text-3xl font-bold text-white">
-                    {data.top_protocols[0]?.name ?? "N/A"}
-                  </h2>
-                  <p className="mt-2 text-sm text-slate-400">
-                    Highest TVL protocol in the current Mantle snapshot.
-                  </p>
-                </article>
-              </section>
-
-              <section className="grid gap-8 lg:grid-cols-[1.1fr_0.9fr]">
-                <article className="rounded-2xl border border-slate-800 bg-slate-900/80 p-6 shadow-lg shadow-black/20">
-                  <div className="mb-6 flex items-center justify-between">
-                    <div>
-                      <h2 className="text-xl font-semibold text-white">
-                        Top Protocols
-                      </h2>
-                      <p className="mt-1 text-sm text-slate-400">
-                        Ranked by total value locked.
-                      </p>
-                    </div>
-                  </div>
-
-                  <div className="overflow-x-auto">
-                    <table className="min-w-full border-separate border-spacing-y-3">
-                      <thead>
-                        <tr className="text-left text-xs uppercase tracking-[0.18em] text-slate-500">
-                          <th className="px-3 py-2">Protocol</th>
-                          <th className="px-3 py-2">Category</th>
-                          <th className="px-3 py-2">TVL</th>
-                          <th className="px-3 py-2">Growth</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {data.top_protocols.map((protocol) => (
-                          <tr
-                            key={protocol.name}
-                            className="rounded-xl bg-slate-950/70 text-sm text-slate-200"
-                          >
-                            <td className="rounded-l-xl px-3 py-4 font-semibold text-white">
-                              {protocol.name}
-                            </td>
-                            <td className="px-3 py-4 text-slate-300">
+                <div className="overflow-x-auto">
+                  <table className="min-w-full text-left border-collapse">
+                    <thead>
+                      <tr className="border-b border-glass-border">
+                        <th className="pb-4 pt-2 px-4 text-xs font-bold uppercase tracking-widest text-slate-500 border-b border-glass-border">Protocol</th>
+                        <th className="pb-4 pt-2 px-4 text-xs font-bold uppercase tracking-widest text-slate-500 border-b border-glass-border">Category</th>
+                        <th className="pb-4 pt-2 px-4 text-xs font-bold uppercase tracking-widest text-slate-500 border-b border-glass-border text-right">TVL</th>
+                        <th className="pb-4 pt-2 px-4 text-xs font-bold uppercase tracking-widest text-slate-500 border-b border-glass-border text-right">Growth</th>
+                      </tr>
+                    </thead>
+                    <tbody className="divide-y divide-glass-border/50">
+                      {data.top_protocols.map((protocol) => (
+                        <tr
+                          key={protocol.name}
+                          className="group hover:bg-white/[0.02] transition-colors"
+                        >
+                          <td className="py-5 px-4 font-bold text-white">
+                            {protocol.name}
+                          </td>
+                          <td className="py-5 px-4 text-slate-400 font-medium">
+                            <span className="inline-block px-3 py-1 bg-white/5 rounded-md text-xs tracking-wider">
                               {protocol.category}
-                            </td>
-                            <td className="px-3 py-4">
-                              {formatCurrency(protocol.tvl)}
-                            </td>
-                            <td
-                              className={`rounded-r-xl px-3 py-4 font-medium ${
-                                protocol.tvl_growth_percentage >= 0
-                                  ? "text-emerald-400"
-                                  : "text-rose-400"
-                              }`}
-                            >
-                              {formatPercent(protocol.tvl_growth_percentage)}
-                            </td>
-                          </tr>
-                        ))}
-                      </tbody>
-                    </table>
-                  </div>
-                </article>
+                            </span>
+                          </td>
+                          <td className="py-5 px-4 text-right font-bold text-slate-200">
+                            {formatCurrency(protocol.tvl)}
+                          </td>
+                          <td
+                            className={`py-5 px-4 text-right font-black ${
+                              protocol.tvl_growth_percentage >= 0
+                                ? "text-emerald-400"
+                                : "text-rose-400"
+                            }`}
+                          >
+                            {formatPercent(protocol.tvl_growth_percentage)}
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              </article>
 
-                <article className="rounded-2xl border border-slate-800 bg-slate-900/80 p-6 shadow-lg shadow-black/20">
-                  <div className="mb-6">
-                    <h2 className="text-xl font-semibold text-white">
-                      TVL by Category
-                    </h2>
-                    <p className="mt-1 text-sm text-slate-400">
-                      Category mix across the leading Mantle protocols.
-                    </p>
-                  </div>
+              <article className="glass-panel rounded-3xl p-8 animate-slide-up animate-stagger-4 flex flex-col items-center">
+                <div className="mb-8 w-full">
+                  <h2 className="text-2xl font-bold text-white mb-2">
+                    TVL Distribution
+                  </h2>
+                  <p className="text-sm text-slate-400">
+                    Macro sector allocation across leading Mantle protocols.
+                  </p>
+                </div>
 
-                  <div className="mx-auto flex max-w-md items-center justify-center">
-                    {categoryChartData ? (
-                      <Doughnut
-                        data={categoryChartData}
-                        options={{
-                          responsive: true,
-                          plugins: {
-                            legend: {
-                              position: "bottom",
-                              labels: {
-                                color: "#cbd5e1",
-                                padding: 18,
-                              },
+                <div className="w-full max-w-sm flex-1 flex items-center justify-center">
+                  {categoryChartData ? (
+                    <Doughnut
+                      data={categoryChartData}
+                      options={{
+                        responsive: true,
+                        cutout: '75%',
+                        plugins: {
+                          legend: {
+                            position: "bottom",
+                            labels: {
+                              color: "#cbd5e1",
+                              padding: 20,
+                              font: {
+                                family: "'Outfit', sans-serif",
+                                size: 13,
+                              }
                             },
                           },
-                        }}
-                      />
-                    ) : (
-                      <p className="text-sm text-slate-400">
-                        No category chart data available.
-                      </p>
-                    )}
-                  </div>
-                </article>
-              </section>
-            </div>
-          ) : (
-            <section className="rounded-2xl border border-slate-800 bg-slate-900/70 p-8">
-              <p className="text-sm text-slate-400">
-                No ecosystem data is currently available.
-              </p>
+                        },
+                      }}
+                    />
+                  ) : (
+                    <p className="text-sm text-slate-400">
+                      No category chart data available.
+                    </p>
+                  )}
+                </div>
+              </article>
             </section>
-          )}
-        </div>
-      </main>
+          </div>
+        ) : null}
+      </div>
     </>
   );
 }
