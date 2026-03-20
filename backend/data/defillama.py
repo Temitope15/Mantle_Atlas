@@ -1,9 +1,9 @@
 from typing import Any
 
-from backend.config import settings
-from backend.models.pool import Pool
-from backend.models.protocol import Protocol
-from backend.utils.http_client import http_client
+from config import settings
+from models.pool import Pool
+from models.protocol import Protocol
+from utils.http_client import http_client
 
 MANTLE_CHAIN = "Mantle"
 

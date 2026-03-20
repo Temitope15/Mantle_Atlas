@@ -1,10 +1,10 @@
 from fastapi import APIRouter
 
-from backend.algorithms.liquidity_gap import detect_liquidity_gaps
-from backend.algorithms.opportunity_score import get_top_opportunities
-from backend.algorithms.yield_finder import get_yield_ranked_pools
-from backend.data.defillama import get_mantle_pools, get_mantle_protocols
-from backend.data.dexscreener import get_pool_volume_growth_index
+from algorithms.liquidity_gap import detect_liquidity_gaps
+from algorithms.opportunity_score import get_top_opportunities
+from algorithms.yield_finder import get_yield_ranked_pools
+from data.defillama import get_mantle_pools, get_mantle_protocols
+from data.dexscreener import get_pool_volume_growth_index
 
 router = APIRouter(tags=["insights"])
 

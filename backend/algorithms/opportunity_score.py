@@ -1,9 +1,9 @@
-from backend.algorithms.liquidity_gap import calculate_gap_score
-from backend.algorithms.yield_finder import get_yield_score
-from backend.data.dexscreener import get_pool_volume_growth_index
-from backend.models.intelligence import IntelligenceResult, ScoreBreakdown
-from backend.models.pool import Pool
-from backend.models.protocol import Protocol
+from algorithms.liquidity_gap import calculate_gap_score
+from algorithms.yield_finder import get_yield_score
+from data.dexscreener import get_pool_volume_growth_index
+from models.intelligence import IntelligenceResult, ScoreBreakdown
+from models.pool import Pool
+from models.protocol import Protocol
 
 
 def _build_protocol_momentum_index(protocols: list[Protocol]) -> dict[str, float]:

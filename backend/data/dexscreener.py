@@ -1,8 +1,8 @@
 from typing import Any
 
-from backend.config import settings
-from backend.models.pool import Pool
-from backend.utils.http_client import HTTPClient
+from config import settings
+from models.pool import Pool
+from utils.http_client import HTTPClient
 
 DEXSCREENER_BATCH_SIZE = 30
 http_client = HTTPClient()

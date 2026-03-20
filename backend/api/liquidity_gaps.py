@@ -1,8 +1,8 @@
 from fastapi import APIRouter
 
-from backend.algorithms.liquidity_gap import detect_liquidity_gaps
-from backend.data.defillama import get_mantle_pools
-from backend.data.dexscreener import get_pool_volume_growth_index
+from algorithms.liquidity_gap import detect_liquidity_gaps
+from data.defillama import get_mantle_pools
+from data.dexscreener import get_pool_volume_growth_index
 
 router = APIRouter(tags=["liquidity-gaps"])
 

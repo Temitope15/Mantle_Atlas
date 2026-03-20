@@ -2,9 +2,9 @@ import heapq
 import json
 from google import genai
 
-from backend.config import settings
-from backend.data.defillama import get_mantle_protocols_with_growth, get_mantle_pools
-from backend.models.ai_schema import AIAnalysisResponse
+from config import settings
+from data.defillama import get_mantle_protocols_with_growth, get_mantle_pools
+from models.ai_schema import AIAnalysisResponse
 
 def fetch_and_preprocess_data() -> list[dict]:
     protocols = get_mantle_protocols_with_growth()

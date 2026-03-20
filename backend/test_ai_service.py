@@ -4,7 +4,7 @@ import os
 # Ensure backend acts as module
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from backend.services.ai_service import generate_defi_strategy
+from services.ai_service import generate_defi_strategy
 
 def run():
     print("Testing generate_defi_strategy...")

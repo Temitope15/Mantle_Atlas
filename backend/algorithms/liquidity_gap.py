@@ -1,6 +1,6 @@
-from backend.data.dexscreener import get_pool_volume_growth_index
-from backend.models.intelligence import IntelligenceResult, ScoreBreakdown
-from backend.models.pool import Pool
+from data.dexscreener import get_pool_volume_growth_index
+from models.intelligence import IntelligenceResult, ScoreBreakdown
+from models.pool import Pool
 
 
 def _build_pool_key(protocol: str, asset: str) -> str:

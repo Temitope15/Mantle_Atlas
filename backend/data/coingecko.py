@@ -1,8 +1,8 @@
 from typing import Iterable, List
 
-from backend.config import settings
-from backend.models.token import Token
-from backend.utils.http_client import http_client
+from config import settings
+from models.token import Token
+from utils.http_client import http_client
 
 
 def get_token_prices(token_ids: Iterable[str], vs_currency: str = "usd") -> List[Token]:

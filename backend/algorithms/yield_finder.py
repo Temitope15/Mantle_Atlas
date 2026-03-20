@@ -1,5 +1,5 @@
-from backend.models.intelligence import IntelligenceResult, ScoreBreakdown
-from backend.models.pool import Pool
+from models.intelligence import IntelligenceResult, ScoreBreakdown
+from models.pool import Pool
 
 TVL_CAP = 10_000_000.0
 

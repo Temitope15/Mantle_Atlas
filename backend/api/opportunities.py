@@ -1,8 +1,8 @@
 from fastapi import APIRouter
 
-from backend.algorithms.opportunity_score import get_top_opportunities
-from backend.data.defillama import get_mantle_pools, get_mantle_protocols
-from backend.data.dexscreener import get_pool_volume_growth_index
+from algorithms.opportunity_score import get_top_opportunities
+from data.defillama import get_mantle_pools, get_mantle_protocols
+from data.dexscreener import get_pool_volume_growth_index
 
 router = APIRouter(tags=["opportunities"])
 

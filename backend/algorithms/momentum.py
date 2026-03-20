@@ -1,5 +1,5 @@
-from backend.models.intelligence import IntelligenceResult, ScoreBreakdown
-from backend.models.protocol import Protocol
+from models.intelligence import IntelligenceResult, ScoreBreakdown
+from models.protocol import Protocol
 
 
 def calculate_momentum_score(tvl_growth_percentage: float) -> float:

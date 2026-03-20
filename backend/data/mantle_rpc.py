@@ -1,6 +1,6 @@
 from web3 import HTTPProvider, Web3
 
-from backend.config import settings
+from config import settings
 
 
 class MantleRPCClient:

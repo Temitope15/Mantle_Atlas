@@ -1,6 +1,6 @@
 from fastapi import APIRouter
 
-from backend.data.defillama import get_mantle_protocols
+from data.defillama import get_mantle_protocols
 
 router = APIRouter()
 

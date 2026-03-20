@@ -1,11 +1,11 @@
 from fastapi import APIRouter
 
-from backend.api.ecosystem import router as ecosystem_router
-from backend.api.insights import router as insights_router
-from backend.api.liquidity_gaps import router as liquidity_gaps_router
-from backend.api.opportunities import router as opportunities_router
-from backend.api.yields import router as yields_router
-from backend.api.ai_analysis import router as ai_analysis_router
+from api.ecosystem import router as ecosystem_router
+from api.insights import router as insights_router
+from api.liquidity_gaps import router as liquidity_gaps_router
+from api.opportunities import router as opportunities_router
+from api.yields import router as yields_router
+from api.ai_analysis import router as ai_analysis_router
 
 api_router = APIRouter()
 

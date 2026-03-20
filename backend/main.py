@@ -2,9 +2,9 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import RedirectResponse
 
-from backend.api.routes import api_router
-from backend.config import settings
-from backend.data.mantle_rpc import get_mantle_rpc_client
+from api.routes import api_router
+from config import settings
+from data.mantle_rpc import get_mantle_rpc_client
 
 app = FastAPI(
     title="Mantle Atlas",

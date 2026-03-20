@@ -1,6 +1,6 @@
 from fastapi import APIRouter
-from backend.models.ai_schema import AIAnalysisResponse
-from backend.services.ai_service import generate_defi_strategy
+from models.ai_schema import AIAnalysisResponse
+from services.ai_service import generate_defi_strategy
 
 router = APIRouter(prefix="/ai", tags=["ai"])
 
