@@ -1,5 +1,7 @@
 import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
+import { StrategyCard } from "../components/cards/StrategyCard";
+import { useChatStore } from "../store/chatStore";
 
 type EcosystemResponse = {
   total_tvl: number;
@@ -74,6 +76,11 @@ export default function HomePage() {
 
         setEcosystem(ecosystemData);
         setOpportunities(opportunityData);
+        
+        useChatStore.getState().setContextData(
+          ecosystemData.top_protocols.slice(0, 10),
+          opportunityData.slice(0, 5)
+        );
       } catch (err) {
         setError(
           err instanceof Error
@@ -207,44 +214,10 @@ export default function HomePage() {
                 </Link>
               </div>
 
-              <div className="overflow-x-auto">
-                <table className="w-full text-left border-collapse">
-                  <thead>
-                    <tr className="border-b border-glass-border">
-                      <th className="pb-4 pt-2 px-4 text-xs font-bold uppercase tracking-widest text-slate-500">Asset/Pool</th>
-                      <th className="pb-4 pt-2 px-4 text-xs font-bold uppercase tracking-widest text-slate-500">Protocol</th>
-                      <th className="pb-4 pt-2 px-4 text-xs font-bold uppercase tracking-widest text-slate-500 text-right">APY</th>
-                      <th className="pb-4 pt-2 px-4 text-xs font-bold uppercase tracking-widest text-slate-500 text-right">Score</th>
-                    </tr>
-                  </thead>
-                  <tbody className="divide-y divide-glass-border/50">
-                    {topOpportunities.map((item, idx) => (
-                      <tr key={`${item.protocol}-${item.asset}`} className="group hover:bg-white/[0.02] transition-colors">
-                        <td className="py-5 px-4">
-                          <div className="flex items-center gap-3">
-                            <div className="w-8 h-8 rounded-full bg-gradient-to-br from-mantle-500 to-cyan-600 flex items-center justify-center text-xs font-bold shadow-lg">
-                              {item.asset.substring(0,2)}
-                            </div>
-                            <span className="font-semibold text-slate-200">{item.asset}</span>
-                          </div>
-                        </td>
-                        <td className="py-5 px-4 text-slate-400 font-medium">
-                          {item.protocol}
-                        </td>
-                        <td className="py-5 px-4 text-right">
-                          <span className="inline-block px-3 py-1 bg-emerald-500/10 text-emerald-400 rounded-lg font-bold text-sm border border-emerald-500/20">
-                            {formatPercent(item.apy)}
-                          </span>
-                        </td>
-                        <td className="py-5 px-4 text-right">
-                          <span className="font-black text-transparent bg-clip-text bg-gradient-to-r from-mantle-300 to-cyan-400">
-                            {formatScore(item.scores.opportunity_score)}
-                          </span>
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
+              <div className="grid gap-4 mt-4">
+                 {topOpportunities.map((item, idx) => (
+                    <StrategyCard key={`top-${item.protocol}-${item.asset}-${idx}`} opportunity={item} rank={idx + 1} />
+                 ))}
               </div>
             </div>
 

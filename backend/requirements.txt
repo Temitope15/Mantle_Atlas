@@ -3,3 +3,5 @@ uvicorn
 web3
 requests
 pydantic
+pydantic-settings
+google-genai

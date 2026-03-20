@@ -2,6 +2,8 @@ import Head from "next/head";
 import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
 import { getOpportunities } from "../services/api";
+import { StrategyCard, OpportunityItem as StrategyCardOpp } from "../components/cards/StrategyCard";
+import { getProtocolMetadata, RiskProfile } from "../utils/protocolMap";
 
 type OpportunityScores = {
   yield_score: number;
@@ -11,13 +13,7 @@ type OpportunityScores = {
   volume_growth?: number;
 };
 
-type Opportunity = {
-  protocol: string;
-  asset: string;
-  apy: number;
-  tvl: number;
-  scores: OpportunityScores;
-};
+type Opportunity = StrategyCardOpp;
 
 const formatCurrency = (value: number): string => {
   return new Intl.NumberFormat("en-US", {
@@ -63,6 +59,23 @@ export default function OpportunitiesPage() {
     }
 
     return opportunities[0];
+  }, [opportunities]);
+
+  const groupedOpportunities = useMemo(() => {
+    const groups: Record<RiskProfile, Opportunity[]> = {
+      "Low Risk": [],
+      "Medium Risk": [],
+      "High Risk": [],
+    };
+
+    for (const opp of opportunities) {
+       const meta = getProtocolMetadata(opp.protocol, opp.asset);
+       if (groups[meta.riskProfile]) {
+         groups[meta.riskProfile].push(opp);
+       }
+    }
+
+    return groups;
   }, [opportunities]);
 
   return (
@@ -143,50 +156,45 @@ export default function OpportunitiesPage() {
               No opportunity data currently available on the network.
             </div>
           ) : (
-            <div className="overflow-x-auto">
-              <table className="min-w-full text-left">
-                <thead className="bg-black/20">
-                  <tr>
-                    <th className="px-8 py-5 text-xs font-bold uppercase tracking-widest text-slate-400">Protocol</th>
-                    <th className="px-8 py-5 text-xs font-bold uppercase tracking-widest text-slate-400">Asset</th>
-                    <th className="px-8 py-5 text-xs font-bold uppercase tracking-widest text-slate-400 text-right">APY</th>
-                    <th className="px-8 py-5 text-xs font-bold uppercase tracking-widest text-slate-400 text-right">TVL</th>
-                    <th className="px-8 py-5 text-xs font-bold uppercase tracking-widest text-slate-400 text-right">Opp Score</th>
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-glass-border/40">
-                  {opportunities.map((opportunity, index) => (
-                    <tr
-                      key={`${opportunity.protocol}-${opportunity.asset}-${index}`}
-                      className="transition-colors hover:bg-white/[0.03]"
-                    >
-                      <td className="px-8 py-6">
-                        <span className="text-lg font-bold text-white">
-                          {opportunity.protocol}
-                        </span>
-                      </td>
-                      <td className="px-8 py-6">
-                        <span className="px-3 py-1 bg-white/5 border border-white/5 rounded text-sm font-semibold tracking-wide text-slate-300">
-                          {opportunity.asset || "N/A"}
-                        </span>
-                      </td>
-                      <td className="px-8 py-6 text-right">
-                        <span className="font-black text-emerald-400">
-                          {formatPercent(opportunity.apy)}
-                        </span>
-                      </td>
-                      <td className="px-8 py-6 text-right font-bold text-slate-200">
-                        {formatCurrency(opportunity.tvl)}
-                      </td>
-                      <td className="px-8 py-6 text-right">
-                        <span className="font-black text-transparent bg-clip-text bg-gradient-to-r from-mantle-300 to-cyan-400 text-lg">
-                          {formatScore(opportunity.scores.opportunity_score)}
-                        </span>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
+            <div className="p-8 pb-12 flex flex-col gap-10">
+               {groupedOpportunities["Low Risk"].length > 0 && (
+                 <div>
+                   <h3 className="text-lg font-bold text-white mb-6 flex items-center gap-2">
+                     🟢 Low Risk / Stable Strategies
+                   </h3>
+                   <div className="grid gap-4">
+                     {groupedOpportunities["Low Risk"].map((opp, idx) => (
+                        <StrategyCard key={`low-${opp.protocol}-${opp.asset}-${idx}`} opportunity={opp} />
+                     ))}
+                   </div>
+                 </div>
+               )}
+               
+               {groupedOpportunities["Medium Risk"].length > 0 && (
+                 <div>
+                   <h3 className="text-lg font-bold text-white mb-6 flex items-center gap-2">
+                     🟡 Medium Risk / Neutral Strategies
+                   </h3>
+                   <div className="grid gap-4">
+                     {groupedOpportunities["Medium Risk"].map((opp, idx) => (
+                        <StrategyCard key={`medium-${opp.protocol}-${opp.asset}-${idx}`} opportunity={opp} />
+                     ))}
+                   </div>
+                 </div>
+               )}
+               
+               {groupedOpportunities["High Risk"].length > 0 && (
+                 <div>
+                   <h3 className="text-lg font-bold text-white mb-6 flex items-center gap-2">
+                     🔴 High Risk / Volatile Strategies
+                   </h3>
+                   <div className="grid gap-4">
+                     {groupedOpportunities["High Risk"].map((opp, idx) => (
+                        <StrategyCard key={`high-${opp.protocol}-${opp.asset}-${idx}`} opportunity={opp} />
+                     ))}
+                   </div>
+                 </div>
+               )}
             </div>
           )}
         </div>
