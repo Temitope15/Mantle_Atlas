@@ -76,8 +76,12 @@ export default function ProtocolTvlChart({
       },
       tooltip: {
         callbacks: {
-          label: function (context: { parsed: { y: number } }) {
-            return ` TVL: ${formatCurrency(context.parsed.y)}`;
+          label: function (context: any) {
+            const yValue = context.parsed.y;
+            if (yValue === null) {
+              return " TVL: N/A";
+            }
+            return ` TVL: ${formatCurrency(yValue)}`;
           },
         },
       },
