@@ -55,13 +55,13 @@ function DashboardNavigation({
           <Link
             key={item.href}
             href={item.href}
-            className={`rounded-xl border px-5 py-2.5 text-sm font-semibold transition-all ${
+            className={`rounded-xl border px-6 py-3 text-sm font-black transition-all ${
               isActive
-                ? "border-transparent bg-gradient-to-r from-mantle-600 to-cyan-600 text-white shadow-lg shadow-mantle-500/25"
-                : "border-glass-border bg-glass-strong text-slate-300 hover:border-mantle-400/50 hover:bg-mantle-500/20 hover:text-white"
+                ? "border-transparent bg-accent-cyan text-dark-950 shadow-[0_0_20px_rgba(6,182,212,0.3)]"
+                : "border-white/5 bg-white/[0.03] text-slate-400 hover:border-white/20 hover:bg-white/[0.08] hover:text-white"
             }`}
           >
-            {item.label}
+            {item.label.toUpperCase()}
           </Link>
         );
       })}
@@ -165,18 +165,17 @@ export default function EcosystemPage(): JSX.Element {
         <div className="absolute top-[-50px] left-[30%] w-96 h-96 bg-mantle-500/10 rounded-full blur-[120px] animate-pulse-slow pointer-events-none" />
         <div className="absolute bottom-[-100px] left-[-100px] w-[500px] h-[500px] bg-cyan-600/10 rounded-full blur-[150px] animate-pulse-slow pointer-events-none" style={{ animationDelay: '1s' }} />
 
-        <header className="mb-14 flex flex-col gap-6 md:flex-row md:items-end md:justify-between relative z-10 animate-slide-up">
-          <div className="max-w-3xl">
-            <div className="inline-flex items-center gap-2 mb-4 px-4 py-1.5 rounded-full border border-mantle-500/30 bg-mantle-500/10 backdrop-blur-md">
-              <span className="w-2 h-2 rounded-full bg-mantle-400 animate-pulse" />
-              <span className="text-xs font-bold uppercase tracking-[0.2em] text-mantle-300">Radar Active</span>
+        <header className="mb-16 flex flex-col gap-10 md:flex-row md:items-end md:justify-between relative z-10 animate-slide-up">
+          <div className="max-w-4xl">
+            <div className="inline-flex items-center gap-3 mb-6 px-4 py-2 rounded-full border border-accent-cyan/20 bg-accent-cyan/5 backdrop-blur-xl">
+              <span className="w-2.5 h-2.5 rounded-full bg-accent-cyan animate-glow" />
+              <span className="text-xs font-black uppercase tracking-[0.3em] text-cyan-200">Radar Active</span>
             </div>
-            <h1 className="text-4xl font-extrabold tracking-tight md:text-6xl mb-4 text-white">
-              Ecosystem <span className="text-transparent bg-clip-text bg-gradient-to-r from-mantle-400 to-cyan-400">Dashboard</span>
+            <h1 className="text-6xl font-black tracking-tighter md:text-8xl mb-6 text-white leading-[0.9]">
+              Ecosystem <span className="text-accent-cyan">Radar</span>
             </h1>
-            <p className="text-lg text-slate-400 font-light leading-relaxed">
-              Monitor Mantle ecosystem TVL, protocol density, and leading
-              protocols from the Atlas intelligence backend.
+            <p className="text-xl md:text-2xl text-slate-400 font-medium leading-relaxed max-w-2xl border-l-2 border-accent-cyan/30 pl-6">
+              Monitor Mantle ecosystem TVL, protocol density, and leading protocols.
             </p>
           </div>
 

@@ -33,21 +33,30 @@ export default function InsightsPage() {
       <Head>
         <title>Mantle Atlas | AI Insights</title>
       </Head>
-      <div className="mx-auto max-w-5xl px-6 py-12 relative overflow-hidden min-h-screen">
+      <div className="mx-auto max-w-7xl px-6 py-12 relative overflow-hidden min-h-screen">
         {/* Decorative Orbs */}
-        <div className="absolute top-[20%] left-[50%] -translate-x-1/2 w-[800px] h-[800px] bg-mantle-600/10 rounded-full blur-[180px] animate-pulse-slow pointer-events-none" />
+        <div className="absolute top-[-100px] right-[-100px] w-96 h-96 bg-accent-cyan/10 rounded-full blur-[120px] animate-pulse-slow pointer-events-none" />
+        <div className="absolute bottom-[-100px] left-[-100px] w-[500px] h-[500px] bg-mantle-500/10 rounded-full blur-[150px] animate-pulse-slow pointer-events-none" style={{ animationDelay: '2s' }} />
 
-        <header className="mb-14 flex flex-col gap-6 md:flex-row md:items-end md:justify-between relative z-10 animate-slide-up">
-          <div className="max-w-2xl">
-            <Link href="/" className="inline-flex items-center gap-2 mb-6 text-slate-400 hover:text-white transition-colors text-sm font-semibold">
-              &larr; Back to Dashboard
+        <header className="mb-16 flex flex-col gap-10 md:flex-row md:items-end md:justify-between relative z-10 animate-slide-up">
+          <div className="max-w-4xl">
+            <Link 
+              href="/" 
+              className="inline-flex items-center gap-2 mb-8 text-slate-500 hover:text-accent-cyan transition-all text-xs font-black uppercase tracking-[0.2em] group"
+            >
+              <span className="group-hover:-translate-x-1 transition-transform">&larr;</span> Back to Dashboard
             </Link>
-            <h1 className="text-4xl font-extrabold tracking-tight md:text-6xl mb-4 text-white">
-              AI <span className="text-transparent bg-clip-text bg-gradient-to-r from-mantle-400 to-emerald-400">Insights</span>
+            
+            <div className="inline-flex items-center gap-3 mb-6 px-4 py-2 rounded-full border border-accent-cyan/20 bg-accent-cyan/5 backdrop-blur-xl">
+              <span className="w-2.5 h-2.5 rounded-full bg-accent-cyan animate-glow" />
+              <span className="text-xs font-black uppercase tracking-[0.3em] text-cyan-200">Intelligence Active</span>
+            </div>
+
+            <h1 className="text-6xl font-black tracking-tighter md:text-8xl mb-6 text-white leading-[0.9]">
+              AI <span className="text-accent-cyan">Insights</span>
             </h1>
-            <p className="text-lg text-slate-400 font-light leading-relaxed">
-              Synthesized intelligence generated directly from real-time Mantle
-              ecosystem yield, liquidity, and momentum.
+            <p className="text-xl md:text-2xl text-slate-400 font-medium leading-relaxed max-w-2xl border-l-2 border-accent-cyan/30 pl-6">
+              Synthesized intelligence generated directly from real-time Mantle ecosystem data.
             </p>
           </div>
         </header>
@@ -74,28 +83,32 @@ export default function InsightsPage() {
             No actionable insights detected at this moment.
           </section>
         ) : (
-          <section className="grid gap-6 relative z-10">
+          <section className="grid gap-8 relative z-10">
             {insights.map((insight, index) => (
               <article
                 key={`${index}-${insight}`}
-                className="glass-card rounded-3xl p-8 hover:premium-glow group animate-slide-up"
+                className="glass-card rounded-[32px] p-10 hover:border-accent-cyan/30 group animate-slide-up relative overflow-hidden"
                 style={{ animationDelay: `${(index + 1) * 100}ms` }}
               >
-                <div className="mb-6 flex items-center gap-4">
-                  <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br from-mantle-500 to-cyan-600 text-lg font-black text-white shadow-lg transition-transform group-hover:scale-110">
-                    {index + 1}
-                  </div>
-                  <div>
-                    <h2 className="text-xl font-bold text-white">
-                      Alpha Intelligence
-                    </h2>
-                    <p className="text-sm font-semibold uppercase tracking-widest text-mantle-400">
-                      System Generated
-                    </p>
+                <div className="absolute inset-0 bg-gradient-to-r from-accent-cyan/0 to-accent-cyan/[0.02] opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                
+                <div className="mb-8 flex items-center justify-between relative z-10">
+                  <div className="flex items-center gap-6">
+                    <div className="flex h-14 w-14 items-center justify-center rounded-[20px] bg-dark-950 border border-white/5 text-2xl font-black text-slate-400 group-hover:scale-110 group-hover:bg-accent-cyan/10 group-hover:text-accent-cyan group-hover:border-accent-cyan/20 transition-all duration-300">
+                      {index + 1}
+                    </div>
+                    <div>
+                      <h2 className="text-2xl font-black text-white tracking-tight">
+                        Alpha Intelligence
+                      </h2>
+                      <p className="text-[10px] uppercase tracking-[0.25em] text-accent-cyan font-black mt-1">
+                        System Generated Signal
+                      </p>
+                    </div>
                   </div>
                 </div>
 
-                <p className="text-xl font-light text-slate-200 leading-relaxed border-l-2 border-mantle-500/50 pl-6 ml-2">
+                <p className="text-2xl font-medium text-slate-200 leading-[1.6] border-l-4 border-accent-cyan/20 pl-8 ml-2">
                   {insight}
                 </p>
               </article>

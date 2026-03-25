@@ -26,7 +26,7 @@ interface ChatState {
   openChat: () => void;
   closeChat: () => void;
   addMessage: (message: Message) => void;
-  setContextData: (protocols: TopProtocol[], opportunities: OpportunityItem[]) => void;
+  setContextData: (protocols: TopProtocol[], opportunities: OpportunityItem[], walletContext?: string) => void;
 }
 
 export const useChatStore = create<ChatState>((set) => ({
@@ -37,9 +37,13 @@ export const useChatStore = create<ChatState>((set) => ({
   openChat: () => set({ isOpen: true }),
   closeChat: () => set({ isOpen: false }),
   addMessage: (message) => set((state) => ({ messages: [...state.messages, message] })),
-  setContextData: (protocols, opportunities) => {
+  setContextData: (protocols, opportunities, walletContext?: string) => {
     // Single pass context builder (O(n))
     let contextBuilder = "ACTIVE SCREEN DATA (Mantle Atlas Dashboard):\n\n--- TOP ECOSYSTEM PROTOCOLS ---\n";
+    
+    if (walletContext) {
+      contextBuilder = `USER WALLET INFO: ${walletContext}\n\n` + contextBuilder;
+    }
     
     for (let i = 0; i < protocols.length; i++) {
         const p = protocols[i];

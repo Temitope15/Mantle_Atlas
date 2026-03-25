@@ -25,15 +25,21 @@ module.exports = {
           950: '#0b2621',
         },
         dark: {
+          950: '#05070A',
           900: '#070A0F',
           800: '#0B111A',
           700: '#111827',
           600: '#1F2937',
         },
+        accent: {
+          cyan: '#06b6d4',
+          teal: '#2e9d7f',
+        },
         glass: {
-          DEFAULT: 'rgba(17, 24, 39, 0.45)',
-          strong: 'rgba(17, 24, 39, 0.85)',
-          border: 'rgba(255, 255, 255, 0.08)',
+          DEFAULT: 'rgba(10, 15, 25, 0.45)',
+          strong: 'rgba(10, 15, 25, 0.85)',
+          border: 'rgba(255, 255, 255, 0.05)',
+          cyan: 'rgba(6, 182, 212, 0.1)',
         }
       },
       backgroundImage: {

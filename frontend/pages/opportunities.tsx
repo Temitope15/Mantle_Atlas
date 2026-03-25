@@ -85,51 +85,63 @@ export default function OpportunitiesPage() {
       </Head>
       <div className="mx-auto max-w-7xl px-6 py-12 relative overflow-hidden min-h-screen">
         {/* Decorative Orbs */}
-        <div className="absolute top-[-150px] right-[10%] w-[600px] h-[600px] bg-mantle-500/10 rounded-full blur-[150px] animate-pulse-slow pointer-events-none" />
+        <div className="absolute top-[-100px] left-[20%] w-96 h-96 bg-accent-cyan/10 rounded-full blur-[120px] animate-pulse-slow pointer-events-none" />
+        <div className="absolute bottom-[-100px] right-[10%] w-[500px] h-[500px] bg-mantle-500/10 rounded-full blur-[150px] animate-pulse-slow pointer-events-none" style={{ animationDelay: '2s' }} />
 
-        <header className="mb-14 flex flex-col gap-6 md:flex-row md:items-end md:justify-between relative z-10 animate-slide-up">
-          <div className="max-w-3xl">
-            <Link href="/" className="inline-flex items-center gap-2 mb-6 text-slate-400 hover:text-white transition-colors text-sm font-semibold">
-              &larr; Back to Dashboard
+        <header className="mb-16 flex flex-col gap-10 md:flex-row md:items-end md:justify-between relative z-10 animate-slide-up">
+          <div className="max-w-4xl">
+            <Link 
+              href="/" 
+              className="inline-flex items-center gap-2 mb-8 text-slate-500 hover:text-accent-cyan transition-all text-xs font-black uppercase tracking-[0.2em] group"
+            >
+              <span className="group-hover:-translate-x-1 transition-transform">&larr;</span> Back to Dashboard
             </Link>
-            <h1 className="text-4xl font-extrabold tracking-tight md:text-6xl mb-4 text-white">
-              Alpha <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-cyan-400">Signals</span>
+            
+            <div className="inline-flex items-center gap-3 mb-6 px-4 py-2 rounded-full border border-accent-cyan/20 bg-accent-cyan/5 backdrop-blur-xl">
+              <span className="w-2.5 h-2.5 rounded-full bg-accent-cyan animate-glow" />
+              <span className="text-xs font-black uppercase tracking-[0.3em] text-cyan-200">Signals Active</span>
+            </div>
+
+            <h1 className="text-6xl font-black tracking-tighter md:text-8xl mb-6 text-white leading-[0.9]">
+              Alpha <span className="text-accent-cyan">Signals</span>
             </h1>
-            <p className="text-lg text-slate-400 font-light leading-relaxed">
-              Monitor the highest-conviction yield opportunities across Mantle
-              using combined yield, momentum, and liquidity-gap intelligence.
+            <p className="text-xl md:text-2xl text-slate-400 font-medium leading-relaxed max-w-2xl border-l-2 border-accent-cyan/30 pl-6">
+              Monitor the highest-conviction yield opportunities across Mantle.
             </p>
           </div>
         </header>
 
         {topOpportunity && !loading && !error ? (
-          <div className="mb-10 glass-panel rounded-3xl p-8 relative z-10 animate-slide-up animate-stagger-1 border-mantle-500/30 overflow-hidden group hover:premium-glow">
-            <div className="absolute top-0 right-0 w-64 h-64 bg-mantle-500/10 blur-[80px] group-hover:bg-mantle-500/20 transition-colors" />
-            <p className="mb-6 text-xs font-bold uppercase tracking-[0.2em] text-mantle-400">
-              #1 Top Opportunity
-            </p>
-            <div className="grid gap-6 md:grid-cols-4 relative z-10">
-              <div>
-                <p className="text-sm font-semibold uppercase tracking-widest text-slate-400 mb-2">Protocol</p>
-                <p className="text-3xl font-black text-white">
+          <div className="mb-20 glass-panel rounded-[40px] p-12 relative z-10 animate-slide-up animate-stagger-1 border-white/5 overflow-hidden group hover:premium-glow transition-all duration-700">
+            <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-accent-cyan/5 blur-[120px] group-hover:bg-accent-cyan/10 transition-colors" />
+            
+            <div className="flex items-center gap-4 mb-10 text-accent-cyan font-black uppercase tracking-[0.4em] text-xs">
+              <span className="w-8 h-[2px] bg-accent-cyan"></span>
+              #1 Ranked Opportunity
+            </div>
+
+            <div className="grid gap-12 md:grid-cols-4 relative z-10">
+              <div className="border-l border-white/10 pl-8">
+                <p className="text-xs font-black uppercase tracking-widest text-slate-500 mb-4">Protocol</p>
+                <p className="text-4xl font-black text-white tracking-tighter">
                   {topOpportunity.protocol}
                 </p>
               </div>
-              <div>
-                <p className="text-sm font-semibold uppercase tracking-widest text-slate-400 mb-2">Pool / Asset</p>
-                <p className="text-3xl font-black text-white">
+              <div className="border-l border-white/10 pl-8">
+                <p className="text-xs font-black uppercase tracking-widest text-slate-500 mb-4">Asset / Pool</p>
+                <p className="text-4xl font-black text-white tracking-tighter">
                   {topOpportunity.asset || "N/A"}
                 </p>
               </div>
-              <div>
-                <p className="text-sm font-semibold uppercase tracking-widest text-slate-400 mb-2">Yield APY</p>
-                <p className="text-3xl font-black text-emerald-400 inline-block px-4 py-1.5 bg-emerald-400/10 rounded-xl border border-emerald-400/20">
-                  {formatPercent(topOpportunity.apy)}
+              <div className="border-l border-white/10 pl-8">
+                <p className="text-xs font-black uppercase tracking-widest text-slate-500 mb-4">Yield APY</p>
+                <p className="text-5xl font-black text-white tracking-tighter inline-flex items-baseline gap-2">
+                  {topOpportunity.apy.toFixed(1)}% <span className="text-accent-cyan text-sm tracking-widest">APY</span>
                 </p>
               </div>
-              <div>
-                <p className="text-sm font-semibold uppercase tracking-widest text-slate-400 mb-2">Composite Score</p>
-                <p className="text-3xl font-black text-transparent bg-clip-text bg-gradient-to-r from-mantle-300 to-cyan-400">
+              <div className="border-l border-white/10 pl-8">
+                <p className="text-xs font-black uppercase tracking-widest text-slate-500 mb-4">Opportunity Score</p>
+                <p className="text-5xl font-black text-accent-cyan tracking-tighter shadow-accent-cyan/20">
                   {formatScore(topOpportunity.scores.opportunity_score)}
                 </p>
               </div>
@@ -137,11 +149,15 @@ export default function OpportunitiesPage() {
           </div>
         ) : null}
 
-        <div className="glass-panel shadow-2xl rounded-3xl relative z-10 animate-slide-up animate-stagger-2">
-          <div className="px-8 py-6 border-b border-glass-border">
-            <h2 className="text-xl font-bold text-white">
+        <div className="relative z-10 animate-slide-up animate-stagger-2">
+          <div className="mb-12 px-2 flex items-center justify-between">
+            <h2 className="text-3xl font-black text-white tracking-tight flex items-center gap-4">
+              <span className="w-10 h-1 bg-accent-cyan rounded-full"></span>
               Signal Leaderboard
             </h2>
+            <div className="text-[10px] font-black uppercase tracking-[0.3em] text-slate-500">
+              Categorized by risk profile
+            </div>
           </div>
 
           {loading ? (
@@ -156,13 +172,14 @@ export default function OpportunitiesPage() {
               No opportunity data currently available on the network.
             </div>
           ) : (
-            <div className="p-8 pb-12 flex flex-col gap-10">
+            <div className="flex flex-col gap-16">
                {groupedOpportunities["Low Risk"].length > 0 && (
                  <div>
-                   <h3 className="text-lg font-bold text-white mb-6 flex items-center gap-2">
-                     🟢 Low Risk / Stable Strategies
+                   <h3 className="text-xs font-black text-emerald-400 uppercase tracking-[0.4em] mb-8 flex items-center gap-4">
+                     <span className="w-2 h-2 rounded-full bg-emerald-400 shadow-[0_0_10px_rgba(52,211,153,0.5)]"></span>
+                     Low Risk / Capital Preservation
                    </h3>
-                   <div className="grid gap-4">
+                   <div className="grid gap-6">
                      {groupedOpportunities["Low Risk"].map((opp, idx) => (
                         <StrategyCard key={`low-${opp.protocol}-${opp.asset}-${idx}`} opportunity={opp} />
                      ))}
@@ -172,10 +189,11 @@ export default function OpportunitiesPage() {
                
                {groupedOpportunities["Medium Risk"].length > 0 && (
                  <div>
-                   <h3 className="text-lg font-bold text-white mb-6 flex items-center gap-2">
-                     🟡 Medium Risk / Neutral Strategies
+                   <h3 className="text-xs font-black text-amber-400 uppercase tracking-[0.4em] mb-8 flex items-center gap-4">
+                     <span className="w-2 h-2 rounded-full bg-amber-400 shadow-[0_0_10px_rgba(251,191,36,0.5)]"></span>
+                     Medium Risk / Yield Focused
                    </h3>
-                   <div className="grid gap-4">
+                   <div className="grid gap-6">
                      {groupedOpportunities["Medium Risk"].map((opp, idx) => (
                         <StrategyCard key={`medium-${opp.protocol}-${opp.asset}-${idx}`} opportunity={opp} />
                      ))}
@@ -185,10 +203,11 @@ export default function OpportunitiesPage() {
                
                {groupedOpportunities["High Risk"].length > 0 && (
                  <div>
-                   <h3 className="text-lg font-bold text-white mb-6 flex items-center gap-2">
-                     🔴 High Risk / Volatile Strategies
+                   <h3 className="text-xs font-black text-rose-400 uppercase tracking-[0.4em] mb-8 flex items-center gap-4">
+                     <span className="w-2 h-2 rounded-full bg-rose-400 shadow-[0_0_10px_rgba(248,113,113,0.5)]"></span>
+                     High Risk / Alpha Maximization
                    </h3>
-                   <div className="grid gap-4">
+                   <div className="grid gap-6">
                      {groupedOpportunities["High Risk"].map((opp, idx) => (
                         <StrategyCard key={`high-${opp.protocol}-${opp.asset}-${idx}`} opportunity={opp} />
                      ))}
