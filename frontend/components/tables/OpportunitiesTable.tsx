@@ -36,6 +36,9 @@ function formatScore(value: number): string {
   return value.toFixed(4);
 }
 
+import { Tooltip } from "../ui/Tooltip";
+import { TOOLTIPS } from "../../utils/tooltipConstants";
+
 export default function OpportunitiesTable({
   opportunities,
 }: OpportunitiesTableProps) {
@@ -52,13 +55,19 @@ export default function OpportunitiesTable({
                 Asset
               </th>
               <th className="px-4 py-3 text-right text-xs font-semibold uppercase tracking-wider text-slate-400">
-                APY
+                <Tooltip content={TOOLTIPS.APY}>
+                  <span className="underline decoration-slate-400/30 decoration-dotted underline-offset-4">APY</span>
+                </Tooltip>
               </th>
               <th className="px-4 py-3 text-right text-xs font-semibold uppercase tracking-wider text-slate-400">
-                TVL
+                <Tooltip content={TOOLTIPS.TVL}>
+                  <span className="underline decoration-slate-400/30 decoration-dotted underline-offset-4">TVL</span>
+                </Tooltip>
               </th>
               <th className="px-4 py-3 text-right text-xs font-semibold uppercase tracking-wider text-slate-400">
-                Opportunity Score
+                <Tooltip content={TOOLTIPS.OPPORTUNITY_SCORE}>
+                  <span className="underline decoration-slate-400/30 decoration-dotted underline-offset-4">Opportunity Score</span>
+                </Tooltip>
               </th>
             </tr>
           </thead>

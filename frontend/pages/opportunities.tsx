@@ -15,6 +15,9 @@ type OpportunityScores = {
 
 type Opportunity = StrategyCardOpp;
 
+import { Tooltip } from "../components/ui/Tooltip";
+import { TOOLTIPS } from "../utils/tooltipConstants";
+
 const formatCurrency = (value: number): string => {
   return new Intl.NumberFormat("en-US", {
     style: "currency",
@@ -102,9 +105,11 @@ export default function OpportunitiesPage() {
               <span className="text-xs font-black uppercase tracking-[0.3em] text-cyan-200">Signals Active</span>
             </div>
 
-            <h1 className="text-6xl font-black tracking-tighter md:text-8xl mb-6 text-white leading-[0.9]">
-              Alpha <span className="text-accent-cyan">Signals</span>
-            </h1>
+            <Tooltip content={TOOLTIPS.ALPHA_SIGNALS}>
+              <h1 className="text-6xl font-black tracking-tighter md:text-8xl mb-6 text-white leading-[0.9] underline decoration-accent-cyan/30 decoration-dotted underline-offset-[20px]">
+                Alpha <span className="text-accent-cyan">Signals</span>
+              </h1>
+            </Tooltip>
             <p className="text-xl md:text-2xl text-slate-400 font-medium leading-relaxed max-w-2xl border-l-2 border-accent-cyan/30 pl-6">
               Monitor the highest-conviction yield opportunities across Mantle.
             </p>
@@ -134,13 +139,17 @@ export default function OpportunitiesPage() {
                 </p>
               </div>
               <div className="border-l border-white/10 pl-8">
-                <p className="text-xs font-black uppercase tracking-widest text-slate-500 mb-4">Yield APY</p>
+                <Tooltip content={TOOLTIPS.APY}>
+                  <p className="text-xs font-black uppercase tracking-widest text-slate-500 mb-4 underline decoration-slate-500/30 decoration-dotted underline-offset-4">Yield APY</p>
+                </Tooltip>
                 <p className="text-5xl font-black text-white tracking-tighter inline-flex items-baseline gap-2">
                   {topOpportunity.apy.toFixed(1)}% <span className="text-accent-cyan text-sm tracking-widest">APY</span>
                 </p>
               </div>
               <div className="border-l border-white/10 pl-8">
-                <p className="text-xs font-black uppercase tracking-widest text-slate-500 mb-4">Opportunity Score</p>
+                <Tooltip content={TOOLTIPS.OPPORTUNITY_SCORE}>
+                  <p className="text-xs font-black uppercase tracking-widest text-slate-500 mb-4 underline decoration-slate-500/30 decoration-dotted underline-offset-4">Opportunity Score</p>
+                </Tooltip>
                 <p className="text-5xl font-black text-accent-cyan tracking-tighter shadow-accent-cyan/20">
                   {formatScore(topOpportunity.scores.opportunity_score)}
                 </p>

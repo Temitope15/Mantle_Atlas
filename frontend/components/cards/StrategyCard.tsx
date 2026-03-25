@@ -38,62 +38,69 @@ const formatScore = (value: number): string => {
   return value.toFixed(4);
 };
 
+import { Tooltip } from '../ui/Tooltip';
+import { TOOLTIPS } from '../../utils/tooltipConstants';
+
 export function StrategyCard({ opportunity, rank }: StrategyCardProps) {
   const [expanded, setExpanded] = useState(false);
   const metadata = getProtocolMetadata(opportunity.protocol, opportunity.asset);
 
   return (
     <div
-      className={`glass-card rounded-3xl p-6 transition-all duration-300 border ${
+      className={`glass-card rounded-3xl p-6 transition-all duration-500 border group ${
         expanded
-          ? "border-mantle-500/50 bg-white/[0.04]"
-          : "border-glass-border hover:bg-white/[0.02] hover:premium-glow"
+          ? "border-accent-cyan/40 bg-white/[0.04] shadow-[0_20px_40px_rgba(0,0,0,0.3)]"
+          : "border-white/5 hover:border-accent-cyan/20 hover:bg-white/[0.02] hover:premium-glow"
       }`}
     >
       {/* Simple View */}
       <div
-        className="flex flex-col md:flex-row md:items-center justify-between gap-4 cursor-pointer"
+        className="flex flex-col md:flex-row md:items-center justify-between gap-6 cursor-pointer"
         onClick={() => setExpanded(!expanded)}
       >
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-5">
           {rank && (
-            <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-mantle-500/20 to-cyan-600/20 border border-mantle-500/30 text-mantle-400 font-bold">
+            <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-dark-950 border border-white/10 text-slate-500 font-black group-hover:text-accent-cyan group-hover:border-accent-cyan/30 transition-all duration-500">
               {rank}
             </div>
           )}
           <div>
-            <h3 className="text-xl font-bold text-white mb-1">
+            <h3 className="text-xl font-black text-white mb-1 group-hover:text-accent-cyan transition-colors">
               {metadata.actionCopy}
             </h3>
-            <div className="flex items-center gap-2 text-sm font-semibold text-slate-400">
-              <span className="px-2 py-0.5 rounded bg-white/5 border border-white/5">
+            <div className="flex items-center gap-2">
+              <span className="text-[10px] font-black uppercase tracking-widest px-2 py-1 rounded bg-white/5 border border-white/5 text-slate-400">
                 {opportunity.asset || "Multi-Asset"}
               </span>
-              <span className="px-2 py-0.5 rounded bg-white/5 border border-white/5">
+              <span className="text-[10px] font-black uppercase tracking-widest px-2 py-1 rounded bg-white/5 border border-white/5 text-slate-400">
                 {opportunity.protocol}
               </span>
             </div>
           </div>
         </div>
 
-        <div className="flex items-center justify-between md:justify-end gap-6">
+        <div className="flex items-center justify-between md:justify-end gap-10">
           <div className="text-right">
-            <p className="text-sm uppercase tracking-widest text-slate-400 font-semibold mb-1">
-              Expected APY
-            </p>
+            <Tooltip content={TOOLTIPS.APY}>
+              <p className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-500 mb-1 underline decoration-slate-500/30 decoration-dotted underline-offset-4">
+                Expected APY
+              </p>
+            </Tooltip>
             <p className="text-2xl font-black text-emerald-400">
               {formatPercent(opportunity.apy)}
             </p>
           </div>
 
           <button
-            className="w-8 h-8 flex items-center justify-center rounded-full bg-white/5 text-slate-400 hover:text-white hover:bg-white/10 transition-colors shrink-0"
+            className={`w-10 h-10 flex items-center justify-center rounded-2xl border transition-all duration-500 ${
+              expanded 
+                ? 'bg-accent-cyan border-accent-cyan text-dark-950 rotate-180' 
+                : 'bg-white/5 border-white/5 text-slate-500 group-hover:text-white group-hover:border-white/20'
+            }`}
             aria-label="Toggle details"
           >
             <svg
-              className={`w-5 h-5 transition-transform duration-300 ${
-                expanded ? "rotate-180" : ""
-              }`}
+              className="w-5 h-5"
               fill="none"
               viewBox="0 0 24 24"
               stroke="currentColor"
@@ -111,17 +118,20 @@ export function StrategyCard({ opportunity, rank }: StrategyCardProps) {
 
       {/* Expandable Alpha View */}
       {expanded && (
-        <div className="mt-6 pt-6 border-t border-glass-border/50 animate-slide-up origin-top">
-          <div className="flex flex-wrap items-center justify-between gap-4 mb-4">
-            <h4 className="text-sm font-bold uppercase tracking-widest text-mantle-400 flex items-center gap-2">
-              <span className="w-2 h-2 rounded-full bg-mantle-400 animate-pulse"></span>
-              Alpha Quantitative Metrics
-            </h4>
+        <div className="mt-8 pt-8 border-t border-white/5 animate-slide-up origin-top text-left">
+          <div className="flex flex-wrap items-center justify-between gap-4 mb-6">
+            <Tooltip content={TOOLTIPS.ALPHA_SIGNALS}>
+              <h4 className="text-xs font-black uppercase tracking-[0.2em] text-accent-cyan flex items-center gap-2 underline decoration-accent-cyan/30 decoration-dotted underline-offset-8">
+                <span className="w-2 h-2 rounded-full bg-accent-cyan animate-pulse"></span>
+                Alpha Quantitative Metrics
+              </h4>
+            </Tooltip>
+            
             <div className="flex flex-wrap gap-2">
               {metadata.tags.map((tag) => (
                 <span
                   key={tag}
-                  className="text-[10px] uppercase tracking-wider font-bold px-2 py-1 rounded bg-mantle-500/10 text-mantle-300 border border-mantle-500/20"
+                  className="text-[10px] font-black uppercase tracking-widest px-2.5 py-1.5 rounded-lg bg-dark-950 text-slate-400 border border-white/5"
                 >
                   {tag}
                 </span>
@@ -129,46 +139,54 @@ export function StrategyCard({ opportunity, rank }: StrategyCardProps) {
             </div>
           </div>
 
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
-            <div className="bg-black/20 rounded-xl p-4 border border-white/5">
-              <p className="text-xs uppercase tracking-widest text-slate-500 font-semibold mb-1">
-                Total Liquidity
-              </p>
-              <p className="text-lg font-bold text-slate-200">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+            <div className="bg-dark-950 rounded-2xl p-5 border border-white/5 hover:border-white/10 transition-colors">
+              <Tooltip content={TOOLTIPS.TVL}>
+                <p className="text-[10px] font-black uppercase tracking-widest text-slate-600 mb-1 underline decoration-slate-600/30 decoration-dotted underline-offset-4">
+                  Total Liquidity
+                </p>
+              </Tooltip>
+              <p className="text-xl font-black text-slate-200">
                 {formatCurrency(opportunity.tvl)}
               </p>
             </div>
-            <div className="bg-black/20 rounded-xl p-4 border border-white/5">
-              <p className="text-xs uppercase tracking-widest text-slate-500 font-semibold mb-1">
-                Yield Score
-              </p>
-              <p className="text-lg font-bold text-slate-200">
+            <div className="bg-dark-950 rounded-2xl p-5 border border-white/5 hover:border-white/10 transition-colors">
+              <Tooltip content={TOOLTIPS.METRICS}>
+                <p className="text-[10px] font-black uppercase tracking-widest text-slate-600 mb-1 underline decoration-slate-600/30 decoration-dotted underline-offset-4">
+                  Yield Score
+                </p>
+              </Tooltip>
+              <p className="text-xl font-black text-slate-200">
                 {formatScore(opportunity.scores.yield_score)}
               </p>
             </div>
-            <div className="bg-black/20 rounded-xl p-4 border border-white/5">
-              <p className="text-xs uppercase tracking-widest text-slate-500 font-semibold mb-1">
-                Momentum Score
-              </p>
-              <p className="text-lg font-bold text-slate-200">
+            <div className="bg-dark-950 rounded-2xl p-5 border border-white/5 hover:border-white/10 transition-colors">
+              <Tooltip content={TOOLTIPS.METRICS}>
+                <p className="text-[10px] font-black uppercase tracking-widest text-slate-600 mb-1 underline decoration-slate-600/30 decoration-dotted underline-offset-4">
+                  Momentum Score
+                </p>
+              </Tooltip>
+              <p className="text-xl font-black text-slate-200">
                 {formatScore(opportunity.scores.momentum_score)}
               </p>
             </div>
-            <div className="bg-black/20 rounded-xl p-4 border border-cyan-500/20 relative overflow-hidden group">
-              <div className="absolute inset-0 bg-gradient-to-br from-mantle-500/10 to-cyan-500/10 group-hover:opacity-100 transition-opacity"></div>
-              <p className="text-xs uppercase tracking-widest text-cyan-400/80 font-semibold mb-1 relative z-10">
-                Opp Score
-              </p>
-              <p className="text-lg font-black text-transparent bg-clip-text bg-gradient-to-r from-mantle-300 to-cyan-400 relative z-10">
+            <div className="bg-dark-950 rounded-2xl p-5 border border-accent-cyan/20 group/score relative overflow-hidden">
+              <div className="absolute inset-0 bg-accent-cyan/5 opacity-0 group-hover/score:opacity-100 transition-opacity"></div>
+              <Tooltip content={TOOLTIPS.OPPORTUNITY_SCORE}>
+                <p className="text-[10px] font-black uppercase tracking-widest text-accent-cyan/80 mb-1 relative z-10 underline decoration-accent-cyan/30 decoration-dotted underline-offset-4">
+                  Opp Score
+                </p>
+              </Tooltip>
+              <p className="text-xl font-black text-transparent bg-clip-text bg-gradient-to-r from-white to-accent-cyan relative z-10">
                 {formatScore(opportunity.scores.opportunity_score)}
               </p>
             </div>
           </div>
 
-          <div className="bg-rose-950/10 border border-rose-500/20 rounded-xl p-4 flex gap-3 items-start">
-            <div className="mt-0.5 shrink-0">
+          <div className="bg-rose-500/5 border border-rose-500/10 rounded-2xl p-6 flex gap-4 items-start group/il relative">
+            <div className="mt-0.5 shrink-0 w-10 h-10 rounded-xl bg-rose-500/10 flex items-center justify-center text-rose-400">
               <svg
-                className="w-5 h-5 text-rose-400"
+                className="w-5 h-5"
                 fill="none"
                 viewBox="0 0 24 24"
                 stroke="currentColor"
@@ -182,10 +200,12 @@ export function StrategyCard({ opportunity, rank }: StrategyCardProps) {
               </svg>
             </div>
             <div>
-              <p className="text-sm font-bold text-rose-200 mb-1">
-                Smart Contract Risk Notice
-              </p>
-              <p className="text-xs text-rose-300/80 leading-relaxed">
+              <Tooltip content={TOOLTIPS.IMPERMANENT_LOSS}>
+                <p className="text-xs font-black uppercase tracking-widest text-rose-300 mb-2 underline decoration-rose-300/30 decoration-dotted underline-offset-4">
+                  Smart Contract Risk & Impermanent Loss
+                </p>
+              </Tooltip>
+              <p className="text-xs text-rose-200/60 leading-relaxed font-medium">
                 {metadata.riskProfile === "High Risk"
                   ? "This strategy involves highly volatile pairs, complex algorithmic mechanisms, or un-audited dependencies. Impermanent loss risk is significant."
                   : metadata.riskProfile === "Medium Risk"

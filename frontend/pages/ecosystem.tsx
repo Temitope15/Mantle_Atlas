@@ -7,13 +7,15 @@ import {
   Chart as ChartJS,
   Legend,
   LinearScale,
-  Tooltip,
+  Tooltip as TooltipJS,
 } from "chart.js";
 import { Doughnut } from "react-chartjs-2";
 
 import { getEcosystem } from "../services/api";
+import { Tooltip } from "../components/ui/Tooltip";
+import { TOOLTIPS } from "../utils/tooltipConstants";
 
-ChartJS.register(ArcElement, Tooltip, Legend, CategoryScale, LinearScale);
+ChartJS.register(ArcElement, TooltipJS, Legend, CategoryScale, LinearScale);
 
 type EcosystemProtocol = {
   name: string;
@@ -196,9 +198,11 @@ export default function EcosystemPage(): JSX.Element {
           <div className="space-y-8 relative z-10">
             <section className="grid gap-6 md:grid-cols-3">
               <article className="glass-card rounded-3xl p-8 hover:premium-glow animate-slide-up animate-stagger-1">
-                <p className="text-xs font-bold uppercase tracking-[0.2em] text-slate-400">
-                  Total Mantle TVL
-                </p>
+                <Tooltip content={TOOLTIPS.TVL}>
+                  <p className="text-xs font-bold uppercase tracking-[0.2em] text-slate-400 underline decoration-slate-400/30 decoration-dotted underline-offset-4">
+                    Total Mantle TVL
+                  </p>
+                </Tooltip>
                 <h2 className="mt-4 text-4xl font-black text-white">
                   {formatCurrency(data.total_tvl)}
                 </h2>
@@ -240,7 +244,11 @@ export default function EcosystemPage(): JSX.Element {
                       <tr className="border-b border-glass-border">
                         <th className="pb-4 pt-2 px-4 text-xs font-bold uppercase tracking-widest text-slate-500 border-b border-glass-border">Protocol</th>
                         <th className="pb-4 pt-2 px-4 text-xs font-bold uppercase tracking-widest text-slate-500 border-b border-glass-border">Category</th>
-                        <th className="pb-4 pt-2 px-4 text-xs font-bold uppercase tracking-widest text-slate-500 border-b border-glass-border text-right">TVL</th>
+                        <th className="pb-4 pt-2 px-4 text-xs font-bold uppercase tracking-widest text-slate-500 border-b border-glass-border text-right px-1">
+                          <Tooltip content={TOOLTIPS.TVL}>
+                            <span className="underline decoration-slate-500/30 decoration-dotted underline-offset-4">TVL</span>
+                          </Tooltip>
+                        </th>
                         <th className="pb-4 pt-2 px-4 text-xs font-bold uppercase tracking-widest text-slate-500 border-b border-glass-border text-right">Growth</th>
                       </tr>
                     </thead>
@@ -279,9 +287,11 @@ export default function EcosystemPage(): JSX.Element {
 
               <article className="glass-panel rounded-3xl p-8 animate-slide-up animate-stagger-4 flex flex-col items-center">
                 <div className="mb-8 w-full">
-                  <h2 className="text-2xl font-bold text-white mb-2">
-                    TVL Distribution
-                  </h2>
+                  <Tooltip content={TOOLTIPS.TVL}>
+                    <h2 className="text-2xl font-bold text-white mb-2 underline decoration-white/20 decoration-dotted underline-offset-8">
+                      TVL Distribution
+                    </h2>
+                  </Tooltip>
                   <p className="text-sm text-slate-400">
                     Macro sector allocation across leading Mantle protocols.
                   </p>
