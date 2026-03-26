@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import RedirectResponse
+from fastapi.responses import RedirectResponse, JSONResponse
 
 from api.routes import api_router
 from config import settings
@@ -25,6 +25,18 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+
+@app.exception_handler(Exception)
+async def global_exception_handler(request, exc):
+    return JSONResponse(
+        status_code=500,
+        content={"message": "An internal server error occurred.", "detail": str(exc)},
+        headers={
+            "Access-Control-Allow-Origin": "https://mantle-atlas-two.vercel.app",
+            "Access-Control-Allow-Credentials": "true",
+        },
+    )
 
 app.include_router(api_router, prefix="/api", tags=["api"])
 

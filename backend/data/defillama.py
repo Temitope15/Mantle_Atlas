@@ -77,7 +77,12 @@ def _extract_token_addresses(item: dict[str, Any]) -> list[str]:
 
 
 def get_mantle_protocols() -> list[Protocol]:
-    payload = http_client.get(settings.defillama_protocols_url)
+    try:
+        payload = http_client.get(settings.defillama_protocols_url)
+    except Exception as e:
+        print(f"Error fetching protocols from DeFi Llama: {e}")
+        return []
+
     if not isinstance(payload, list):
         return []
 
@@ -107,7 +112,12 @@ def get_mantle_protocols() -> list[Protocol]:
 
 
 def get_mantle_protocols_with_growth() -> list[dict[str, Any]]:
-    payload = http_client.get(settings.defillama_protocols_url)
+    try:
+        payload = http_client.get(settings.defillama_protocols_url)
+    except Exception as e:
+        print(f"Error fetching protocols with growth from DeFi Llama: {e}")
+        return []
+
     if not isinstance(payload, list):
         return []
 
@@ -143,7 +153,12 @@ def get_mantle_protocols_with_growth() -> list[dict[str, Any]]:
 
 
 def get_mantle_pools() -> list[Pool]:
-    payload = http_client.get(settings.defillama_pools_url)
+    try:
+        payload = http_client.get(settings.defillama_pools_url)
+    except Exception as e:
+        print(f"Error fetching pools from DeFi Llama: {e}")
+        return []
+
     if not isinstance(payload, dict):
         return []
 

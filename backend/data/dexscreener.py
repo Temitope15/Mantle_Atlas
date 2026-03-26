@@ -180,7 +180,12 @@ def get_liquidity_pairs(
     ):
         joined_addresses = ",".join(address_batch)
         url = f"{settings.dexscreener_base_url}/tokens/v1/{chain_id}/{joined_addresses}"
-        response = http_client.get(url)
+        
+        try:
+            response = http_client.get(url)
+        except Exception as e:
+            print(f"Error fetching data from Dexscreener: {e}")
+            continue
 
         if not isinstance(response, list):
             continue

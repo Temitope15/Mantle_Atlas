@@ -6,7 +6,7 @@ class Settings(BaseSettings):
         env_file = ".env"
     app_name: str = "Mantle Atlas"
     mantle_rpc_url: str = "https://mantle-rpc.publicnode.com"
-    defillama_protocols_url: str = "https://api.llama.fi/protocols"
+    defillama_protocols_url: str = "https://defillama-datasets.llama.fi/lite/v2/protocols"
     defillama_pools_url: str = "https://yields.llama.fi/pools"
     coingecko_simple_price_url: str = "https://api.coingecko.com/api/v3/simple/price"
     dexscreener_base_url: str = "https://api.dexscreener.com"
