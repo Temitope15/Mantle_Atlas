@@ -33,7 +33,15 @@ def _is_mantle_protocol(item: dict[str, Any]) -> bool:
     chains = item.get("chains")
     if isinstance(chains, list):
         return MANTLE_CHAIN in chains
-    return item.get("chain") == MANTLE_CHAIN
+    
+    if item.get("chain") == MANTLE_CHAIN:
+        return True
+        
+    chain_tvls = item.get("chainTvls")
+    if isinstance(chain_tvls, dict):
+        return MANTLE_CHAIN in chain_tvls
+        
+    return False
 
 
 def _get_protocol_growth_percentage(item: dict[str, Any]) -> float:
@@ -98,10 +106,18 @@ def get_mantle_protocols() -> list[Protocol]:
         if not isinstance(name, str):
             continue
 
+        tvl_on_mantle = 0.0
+        chain_tvls = item.get("chainTvls")
+        if isinstance(chain_tvls, dict):
+            tvl_on_mantle = _to_float(chain_tvls.get(MANTLE_CHAIN))
+        
+        if tvl_on_mantle <= 0.0:
+            tvl_on_mantle = _to_float(item.get("tvl"))
+
         protocols.append(
             Protocol(
                 name=name,
-                tvl=_to_float(item.get("tvl")),
+                tvl=tvl_on_mantle,
                 chain=MANTLE_CHAIN,
                 category=category if isinstance(category, str) else "Unknown",
                 tvl_growth_percentage=_get_protocol_growth_percentage(item),
@@ -133,10 +149,18 @@ def get_mantle_protocols_with_growth() -> list[dict[str, Any]]:
         if not isinstance(name, str):
             continue
 
+        tvl_on_mantle = 0.0
+        chain_tvls = item.get("chainTvls")
+        if isinstance(chain_tvls, dict):
+            tvl_on_mantle = _to_float(chain_tvls.get(MANTLE_CHAIN))
+
+        if tvl_on_mantle <= 0.0:
+            tvl_on_mantle = _to_float(item.get("tvl"))
+
         protocols_with_growth.append(
             {
                 "name": name,
-                "tvl": _to_float(item.get("tvl")),
+                "tvl": tvl_on_mantle,
                 "chain": MANTLE_CHAIN,
                 "category": category if isinstance(category, str) else "Unknown",
                 "tvl_prev_day": _to_float(item.get("tvlPrevDay")),
